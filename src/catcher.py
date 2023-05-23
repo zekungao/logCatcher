@@ -11,7 +11,7 @@ class Metric:
         self.index = index
         self.content = "not found"
 
-    def init(self, src: str):
+    def compile(self, src: str):
         catch = re.findall(self.pattern, src)
         if len(catch) > max(0, self.index):
             self.content = catch[self.index]
@@ -33,7 +33,7 @@ class Block(Metric):
         super(Block, self).__init__(pattern, id)
 
     def add(self, name, metric: Metric):
-        metric.init(self.content)
+        metric.compile(self.content)
         self.metrics[name] = metric
         return self.metrics[name]
 
