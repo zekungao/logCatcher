@@ -16,7 +16,7 @@ class Metric:
         if len(catch) > max(0, self.index):
             self.content = catch[self.index]
 
-    def _to_dict(self):
+    def to_dict(self):
         return self.content
 
 
@@ -32,16 +32,16 @@ class Block(Metric):
         pattern += max(1, expand) * '.*\n'
         super(Block, self).__init__(pattern, id)
 
-    def _add(self, name, metric: Metric):
+    def add(self, name, metric: Metric):
         metric.init(self.content)
         self.metrics[name] = metric
         return self.metrics[name]
 
-    def _to_dict(self):
+    def to_dict(self):
         dict = {}
         for key, value in self.metrics.items():
             if isinstance(value, Metric):
-                dict[key] = value._to_dict()
+                dict[key] = value.to_dict()
             else:
                 dict[key] = value
         return dict
@@ -52,13 +52,13 @@ class Catcher(Block):
         self.metrics = {}
         self.content = src
     
-    def _read(self, file: str):
+    def read(self, file: str):
         with open(file, 'r') as f:
             self.content = f.read()
 
-    def _to_json(self):
-        return json.dumps(self._to_dict(), sort_keys=True, indent=4)
+    def to_json(self):
+        return json.dumps(self.to_dict(), sort_keys=True, indent=4)
 
-    def _write(self, path):
+    def write(self, path):
         with open(path, 'w') as f:
-            f.write(self._to_json())
+            f.write(self.to_json())

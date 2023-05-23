@@ -29,12 +29,10 @@ class Unittest(unittest.TestCase):
                          'mytest key=foo \"not integer\n x555 format value: \n')
 
     def test_to_dict(self):
-        golden = {}
-        golden["key"] = "foo"
         c = Catcher(self.test_src)
-        b = c._add("test", Block("key"))
-        b._add("key", Metric(r'(?<=key=)[a-z]+', 0))
-        dict = c._to_dict()
+        b = c.add("test", Block("key"))
+        b.add("key", Metric(r'(?<=key=)[a-z]+', 0))
+        dict = c.to_dict()
         self.assertEqual(dict["test"]["key"], "foo")
 
 
@@ -42,25 +40,25 @@ class Regressions(unittest.TestCase):
     def test_primetime_global_timing_max(self):
         case_file = "./test/PrimeTime.report.example.global.max"
         c = Catcher()
-        c._read(case_file)
-        b = c._add("Setup", Block("Setup violations", 8))
-        b1 = b._add("wns", Block("WNS", 1))
-        b1._add("total", FloatMetric(0))
-        b1._add("reg2reg", FloatMetric(1))
-        b1._add("in2reg", FloatMetric(2))
-        b1._add("reg2out", FloatMetric(3))
-        b1._add("in2out", FloatMetric(4))
+        c.read(case_file)
+        b = c.add("Setup", Block("Setup violations", 8))
+        b1 = b.add("wns", Block("WNS", 1))
+        b1.add("total", FloatMetric(0))
+        b1.add("reg2reg", FloatMetric(1))
+        b1.add("in2reg", FloatMetric(2))
+        b1.add("reg2out", FloatMetric(3))
+        b1.add("in2out", FloatMetric(4))
 
-        b2 = b._add("tns", Block("TNS", 1))
-        b2._add("total", FloatMetric(0))
-        b2._add("reg2reg", FloatMetric(1))
-        b2._add("in2reg", FloatMetric(2))
-        b2._add("reg2out", FloatMetric(3))
-        b2._add("in2out", FloatMetric(4))
+        b2 = b.add("tns", Block("TNS", 1))
+        b2.add("total", FloatMetric(0))
+        b2.add("reg2reg", FloatMetric(1))
+        b2.add("in2reg", FloatMetric(2))
+        b2.add("reg2out", FloatMetric(3))
+        b2.add("in2out", FloatMetric(4))
 
         golden = f'{case_file}.ok'
         revise = f'{case_file}.json'
-        c._write(revise)
+        c.write(revise)
         self.assertTrue(filecmp.cmp(golden, revise))
 
 
