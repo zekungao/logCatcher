@@ -1,0 +1,33 @@
+Information: Starting incremental signal integrity update. (XTALK-016)
+Information: Setting timing_update_effort to low. (XTALK-017)
+Information: Starting crosstalk aware timing iteration 1. (XTALK-001)
+Information: Starting crosstalk aware timing iteration 2. (XTALK-001)
+Information: Number of nets evaluated in the previous iteration: 0. (XTALK-105)
+****************************************
+Report : global_timing
+	-format { narrow }
+Design : XXXXXX
+Version: O-2077.07-XXX
+Date   : Fri May 12 19:56:05 2023
+****************************************
+
+Setup violations
+------------------------------------------------------------------------
+            Total     reg->reg      in->reg     reg->out      in->out
+------------------------------------------------------------------------
+WNS     -23.19247    -23.19247      0.00000      0.00000      0.00000
+TNS  -32613.46737 -32613.46737      0.00000      0.00000      0.00000
+NUM          3209         3209            0            0            0
+------------------------------------------------------------------------
+
+
+Hold violations
+-------------------------------------------------------------------
+           Total    reg->reg     in->reg    reg->out     in->out
+-------------------------------------------------------------------
+WNS     -5.89391    -5.89391     0.00000     0.00000     0.00000
+TNS  -1783.11007 -1783.11007     0.00000     0.00000     0.00000
+NUM         1495        1495           0           0           0
+-------------------------------------------------------------------
+
+1
