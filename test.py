@@ -16,7 +16,7 @@ class Unittest(unittest.TestCase):
         m.append(FloatMetric(-1))
         m.append(FloatMetric(2))
         for ele in m:
-            ele.init(self.test_src)
+            ele.compile(self.test_src)
         self.assertEqual(m[0].content, 'x555')
         self.assertEqual(m[1].content, 'key=foo')
         self.assertEqual(m[2].content, "-5.123")
@@ -24,7 +24,7 @@ class Unittest(unittest.TestCase):
 
     def test_block(self):
         b = Block("key", 2)
-        b.init(self.test_src)
+        b.compile(self.test_src)
         self.assertEqual(b.content,
                          'mytest key=foo \"not integer\n x555 format value: \n')
 

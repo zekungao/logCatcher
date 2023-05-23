@@ -1,0 +1,22 @@
+name: branch protection from pr
+on:  pull_request
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: show cmd
+        run : |
+          python3 -v
+          echo "repo: ${{ github.repository }}"
+          echo "ref: ${{ github.event.pull_request.head.ref }}"
+      - name: test
+        run: |
+          ./test.py
