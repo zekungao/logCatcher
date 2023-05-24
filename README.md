@@ -40,14 +40,14 @@ You have two way to add source for it
 
 ```python
 catcher.content = "xxx" # specify the contents
-catcher._read("file_name") # specify log file path
+catcher.read("file_name") # specify log file path
 ```
 
 Our target is to report a Json.
 So you are able to add `block` to handle a bundle of metric with classify
 
 ```python
-block = catcher._add("block nam", Block("key feature", 8))
+block = catcher.add("block nam", Block("key feature", 8))
 ```
 
 "key feature" means the key feature you need to match in this block of log.
@@ -75,8 +75,20 @@ Then add metrics catch in your block.
 Here you are able to use `FloatMetric` object to catch int/double without specify regex.
 
 ```python
-block._add("total", FloatMetric(0))
+block.add("total", FloatMetric(0))
 ```
 
 Above code means get the first variable in your block, `-23.19247`
 You need to know this catch has not line limit.
+
+Then you are able to transform all data collected by catcher into json:
+
+```python
+catcher.to_json()
+```
+
+Or directly write it down to a json file
+
+```python
+catcher.writer("path.json")
+```
