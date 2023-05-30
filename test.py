@@ -3,7 +3,8 @@
 
 import unittest
 import filecmp
-from src.catcher import Catcher, Block, Metric, FloatMetric
+from src.catcher import Catcher, Block
+from src.metric import Metric, FloatMetric, EnumMetric
 
 
 class Unittest(unittest.TestCase):
@@ -22,11 +23,26 @@ class Unittest(unittest.TestCase):
         self.assertEqual(m[2].content, "-5.123")
         self.assertEqual(m[3].content, "not found")
 
+    def test_enum_metric(self):
+        test_content = "Mon schedule: Monster-Fri, lowSatisfier-Thunder-Wed, him.Sun-Sat"
+        enum = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        m = []
+        m.append(EnumMetric(enum, 0))
+        m.append(EnumMetric(enum, 1))
+        m.append(EnumMetric(enum, 2))
+        m.append(EnumMetric(enum, -1))
+        for ele in m:
+            ele.compile(test_content)
+        self.assertEqual(m[0].content, 'Mon')
+        self.assertEqual(m[1].content, 'Fri')
+        self.assertEqual(m[2].content, 'Wed')
+        self.assertEqual(m[3].content, "Sat")
+
     def test_block(self):
         b = Block("key", 2)
         b.compile(self.test_src)
-        self.assertEqual(b.content,
-                         'mytest key=foo \"not integer\n x555 format value: \n')
+        self.assertEqual(
+            b.content, 'mytest key=foo \"not integer\n x555 format value: \n')
 
     def test_to_dict(self):
         c = Catcher(self.test_src)

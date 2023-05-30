@@ -2,27 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import json
-import re
-
-
-class Metric:
-    def __init__(self, pattern: str, index=0):
-        self.pattern = pattern
-        self.index = index
-        self.content = "not found"
-
-    def compile(self, src: str):
-        catch = re.findall(self.pattern, src)
-        if len(catch) > max(0, self.index):
-            self.content = catch[self.index]
-
-    def to_dict(self):
-        return self.content
-
-
-class FloatMetric(Metric):
-    def __init__(self, index=0):
-        super(FloatMetric, self).__init__(r'-?\d+.?\d+', index)
+from src.metric import Metric
 
 
 class Block(Metric):
@@ -51,7 +31,7 @@ class Catcher(Block):
     def __init__(self, src=""):
         self.metrics = {}
         self.content = src
-    
+
     def read(self, file: str):
         with open(file, 'r') as f:
             self.content = f.read()
